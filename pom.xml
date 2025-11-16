@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.forecast.vending</groupId>
+    <artifactId>combined-edx-forecast-uploader</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Combined EDX Forecast Uploader</name>
+    <description>A Java application for uploading forecast data to EDX system with configurable parameters</description>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <joda.time.version>2.10.14</joda.time.version>
+        <log4j.version>1.2.17</log4j.version>
+        <junit.version>4.13.2</junit.version>
+    </properties>
+
+    <dependencies>
+        <!-- Joda Time for date/time handling -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.time.version}</version>
+        </dependency>
+
+        <!-- Log4j for logging -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- JUnit for testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Internal Dependencies -->
+        <!-- Note: These dependencies are typically available in internal Maven repository -->
+        <!-- For external use, these would need to be replaced with equivalent open-source libraries -->
+        
+        <dependency>
+            <groupId>com.appcommon</groupId>
+            <artifactId>application</artifactId>
+            <version>LATEST</version>
+            <!-- Internal library for application configuration -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.forecast</groupId>
+            <artifactId>application</artifactId>
+            <version>LATEST</version>
+            <!-- Internal forecast application utilities -->
+        </dependency>
+
+        <dependency>
+            <groupId>bosc.commons</groupId>
+            <artifactId>joda-time-utils</artifactId>
+            <version>LATEST</version>
+            <!-- Internal Joda Time utilities -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.forecast</groupId>
+            <artifactId>batch-forecast-export-service</artifactId>
+            <version>LATEST</version>
+            <!-- Internal batch forecast export service client -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.forecast.vending</groupId>
+            <artifactId>util</artifactId>
+            <version>LATEST</version>
+            <!-- Internal forecast vending utilities -->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Exec Plugin for running the application -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.forecast.vending.app.CombinedEDXForecastUploader</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Assembly Plugin for creating executable JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.forecast.vending.app.CombinedEDXForecastUploader</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Surefire Plugin for running tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Internal Repository Configuration -->
+    <repositories>
+        <repository>
+            <id>xxxx-internal</id>
+            <name>XXXX Internal Repository</name>
+            <url>https://packages.xxxx.com/maven</url>
+            <!-- This would be replaced with actual internal repository URL -->
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>xxxx-internal-releases</id>
+            <name>XXXX Internal Releases</name>
+            <url>https://packages.xxxx.com/maven/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>xxxx-internal-snapshots</id>
+            <name>XXXX Internal Snapshots</name>
+            <url>https://packages.xxxx.com/maven/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
